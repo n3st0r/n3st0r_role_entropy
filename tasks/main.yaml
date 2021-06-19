@@ -1,0 +1,56 @@
+---
+
+- name: Install haveged
+  ansible.builtin.apt:
+    name:
+      - haveged
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+  notify:
+    - restart haveged
+  tags:
+    - entropy
+    - haveged
+
+
+- name: Improve entropy level - configure haveged
+  ansible.builtin.template:
+    src: "{{ n3st0r_role_entropy_config_template }}"
+    dest: "{{ n3st0r_role_entropy_config_file }}"
+    owner: "{{ n3st0r_role_entropy_config_owner }}"
+    group: "{{ n3st0r_role_entropy_config_group }}"
+    mode: "{{ n3st0r_role_entropy_config_mode }}"
+  notify:
+    - restart haveged
+  tags:
+    - entropy
+    - haveged
+
+
+- name: Ensure service haveged is enabled and unmasked
+  ansible.builtin.systemd:
+    name: haveged
+    enabled: yes
+    masked: no
+    state: started
+  tags:
+    - entropy
+    - haveged
+
+
+- name: Get entropy
+  ansible.builtin.shell:
+    cmd: cat /proc/sys/kernel/random/entropy_avail
+  register: entropy_avail
+  tags:
+    - entropy
+    - haveged
+
+
+- name: Show entropy
+  debug:
+    msg: "Avaiable entropy: {{ entropy_avail.stdout }}"
+  tags:
+    - entropy
+    - haveged

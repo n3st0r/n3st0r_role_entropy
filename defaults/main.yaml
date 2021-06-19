@@ -1,0 +1,8 @@
+
+n3st0r_role_entropy_watermark: 1024
+
+n3st0r_role_entropy_config_template: "etc/default/haveged.j2"
+n3st0r_role_entropy_config_file: "/etc/default/haveged"
+n3st0r_role_entropy_config_mode: 0600
+n3st0r_role_entropy_config_owner: root
+n3st0r_role_entropy_config_group: root

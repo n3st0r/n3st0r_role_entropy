@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+# Configuration file for haveged
+
+# Options to pass to haveged:
+#   -w sets low entropy watermark (in bits)
+DAEMON_ARGS="-w {{ n3st0r_role_entropy_watermark }}"
+
+# Verifation
+# cat /proc/sys/kernel/random/entropy_avail

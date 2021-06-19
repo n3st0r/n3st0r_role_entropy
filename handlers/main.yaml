@@ -1,0 +1,7 @@
+---
+
+- name: Restart systemd haveged.service
+  ansible.builtin.systemd:
+    name: haveged.service
+    state: restarted
+  listen: restart haveged
