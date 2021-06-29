@@ -43,6 +43,7 @@
   ansible.builtin.shell:
     cmd: cat /proc/sys/kernel/random/entropy_avail
   register: entropy_avail
+  changed_when: False
   tags:
     - entropy
     - haveged
